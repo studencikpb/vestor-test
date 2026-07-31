@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="grid-background.css">
   <link rel="stylesheet" href="interaction-fixes.css?v=20260723-5">
   <link rel="stylesheet" href="login-security.css?v=20260729-3">
+  <link rel="stylesheet" href="mobile.css?v=20260731-1">
   <script src="security-bootstrap.js"></script>
 </head>
 <body>
@@ -80,7 +81,8 @@
   <div class="app" id="app" hidden>
     <header class="topbar">
       <a class="app-brand" href="#"><span class="brand-symbol small">V</span><strong>VESTOR</strong><i>TERMINAL</i></a>
-      <nav><a class="active" href="#overview" data-page="overview" data-i18n="overview">Przegląd</a><a href="#markets" data-page="markets" data-i18n="markets">Rynki</a><a href="#market-status" data-page="market-status" data-i18n="marketStatus">Market status</a><a href="#bubbles" data-page="bubbles">Crypto Bubbles</a><a href="#portfolio" data-page="portfolio" data-i18n="portfolioNav">Portfel</a><a href="#watching" data-page="watching" data-i18n="watching">Obserwowane</a></nav>
+      <nav id="primaryNavigation"><a class="active" href="#overview" data-page="overview" data-i18n="overview">Przegląd</a><a href="#markets" data-page="markets" data-i18n="markets">Rynki</a><a href="#market-status" data-page="market-status" data-i18n="marketStatus">Market status</a><a href="#bubbles" data-page="bubbles">Crypto Bubbles</a><a href="#portfolio" data-page="portfolio" data-i18n="portfolioNav">Portfel</a><a href="#watching" data-page="watching" data-i18n="watching">Obserwowane</a></nav>
+      <button class="mobile-menu-button" id="mobileMenuButton" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="primaryNavigation"><span></span><span></span><span></span></button>
       <div class="top-actions"><button class="mode-button portfolio-privacy-button" id="portfolioPrivacyButton" type="button" title="Ukryj wartości portfela" aria-label="Ukryj wartości portfela" aria-pressed="false">◉</button><button class="mode-button" id="languageButton" type="button" title="Language">EN</button><button class="mode-button" id="themeButton" type="button" title="Motyw">☼</button><div class="profile-wrap"><button class="profile" id="profileButton" type="button"><span id="profileInitials">IN</span><span><b id="profileName">Inwestor</b><small data-i18n="investor">Inwestor</small></span><i>⌄</i></button><div class="profile-menu" id="profileMenu"><button type="button" data-open-settings><span>⚙</span><span><b data-i18n="settings">Ustawienia</b><small data-i18n="accountAndInvites">Konto i zaproszenia</small></span></button><button type="button" id="menuLogout"><span>↪</span><span><b data-i18n="logout">Wyloguj</b></span></button></div></div><button class="logout" id="logoutButton" type="button" data-i18n="logout">Wyloguj</button></div>
     </header>
 
@@ -140,6 +142,6 @@
   <script src="vendor/supabase-2.57.4.min.js"></script>
   <script src="vendor/jspdf-2.5.2.min.js"></script>
   <script src="vendor/tesseract-6.0.1.min.js"></script>
-<script src="script.js?v=20260731-markets-1"></script>
+<script src="script.js?v=20260731-mobile-1"></script>
 </body>
 </html>

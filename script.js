@@ -269,6 +269,12 @@ const BUILTIN_BTC_ETF_FLOWS={source:'SatsIntel · Farside Investors',updated:'20
 $$('[data-heatmap-metric]').forEach(button=>button.addEventListener('click',()=>{etfHeatmapMetric=button.dataset.heatmapMetric;$$('[data-heatmap-metric]').forEach(x=>x.classList.toggle('active',x===button));renderEtfHeatmap()}));
 function showPage(name){if(name!=='bubbles')stopBubblePhysics();$$('.page-view').forEach(v=>{v.hidden=v.dataset.view!==name;v.classList.toggle('active',v.dataset.view===name)});$$('.topbar nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));$('#profileMenu').classList.remove('open');if((name==='markets'||name==='bubbles')&&!state.coins.length){loadBundledCoins();loadCoins()}if(name==='bubbles')renderBubbles();if(name==='market-status'){loadBundledCoins().then(loadMarketStatus);loadCryptoEtfs()}if(name==='vestor-indicator'){loadVestorIndicator();loadCryptoEtfs()}if(name==='crypto-etfs')loadCryptoEtfs();if(name==='portfolio')autoSyncPublicWallets();if(name==='settings')renderSettings();window.scrollTo({top:0,behavior:'smooth'})}
 $$('[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showPage(a.dataset.page)}));
+const mobileMenuButton=$('#mobileMenuButton'),topbar=$('.topbar');
+function closeMobileMenu(){topbar?.classList.remove('mobile-nav-open');mobileMenuButton?.setAttribute('aria-expanded','false')}
+mobileMenuButton?.addEventListener('click',event=>{event.stopPropagation();const open=topbar.classList.toggle('mobile-nav-open');mobileMenuButton.setAttribute('aria-expanded',String(open))});
+$('#primaryNavigation')?.addEventListener('click',closeMobileMenu);
+document.addEventListener('click',event=>{if(topbar?.classList.contains('mobile-nav-open')&&!topbar.contains(event.target))closeMobileMenu()});
+window.addEventListener('resize',()=>{if(window.innerWidth>1100)closeMobileMenu()});
 $('[data-page="vestor-indicator"]').addEventListener('click',loadIndicatorBtcChart);
 $('[data-page="vestor-indicator"]').addEventListener('click',loadIndicatorHistory);
 $('.app-brand').addEventListener('click',e=>{e.preventDefault();showPage('overview')});

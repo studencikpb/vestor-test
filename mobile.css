@@ -1,0 +1,99 @@
+.mobile-menu-button{display:none}
+
+@media(max-width:1100px){
+  body{overflow-x:hidden}
+  .topbar{height:64px;padding:0 16px;gap:10px}
+  .topbar nav{display:none;position:fixed;z-index:60;top:64px;left:12px;right:12px;height:auto;max-height:calc(100dvh - 82px);overflow-y:auto;margin:0;padding:10px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--panel) 96%,transparent);box-shadow:0 24px 70px #0008;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+  .topbar.mobile-nav-open nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .topbar nav a{min-height:48px;padding:0 14px;border-radius:9px;color:var(--text);font-size:14px}
+  .topbar nav a.active{background:color-mix(in srgb,var(--green) 14%,var(--panel2));color:var(--green)}
+  .topbar nav a.active:after{display:none}
+  .mobile-menu-button{display:grid;place-content:center;gap:4px;width:42px;height:42px;margin-left:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);cursor:pointer}
+  .mobile-menu-button span{display:block;width:18px;height:2px;border-radius:2px;background:currentColor;transition:.2s}
+  .mobile-nav-open .mobile-menu-button span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .mobile-nav-open .mobile-menu-button span:nth-child(2){opacity:0}
+  .mobile-nav-open .mobile-menu-button span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  .top-actions{margin-left:0}
+}
+
+@media(max-width:760px){
+  :root{font-size:16px}
+  body{padding-bottom:env(safe-area-inset-bottom)}
+  .topbar{height:60px;padding:0 max(12px,env(safe-area-inset-left));gap:7px}
+  .topbar nav{top:60px;left:8px;right:8px;max-height:calc(100dvh - 74px)}
+  .topbar.mobile-nav-open nav{grid-template-columns:1fr}
+  .app-brand{gap:8px;font-size:15px;letter-spacing:.12em;white-space:nowrap}
+  .brand-symbol.small{width:38px;height:38px;flex:0 0 38px}
+  .mobile-menu-button{order:4;width:38px;height:38px}
+  .top-actions{gap:5px}
+  .top-actions .mode-button{width:38px;min-width:38px;height:38px;padding:0;font-size:12px}
+  .profile{height:38px}
+  .profile>span:first-child{width:38px;height:38px;font-size:11px}
+  .logout{display:none}
+  .ticker-tape{height:34px;padding:0 14px;gap:24px}
+  .dashboard{width:100%;padding:24px 14px 36px}
+  .welcome-row{gap:16px;margin-bottom:20px}
+  .welcome-row h1,.page-heading h1{font-size:clamp(28px,8vw,38px);line-height:1.08}
+  .welcome-row>div>p:last-child,.page-heading>div>p:last-child{font-size:15px;line-height:1.5}
+  .overline{font-size:11px;letter-spacing:.14em}
+  .market-status{min-height:70px;padding:14px;flex-wrap:wrap}
+  .market-status div{min-width:0;flex:1}
+  .market-status b{font-size:15px}.market-status small{font-size:12px;line-height:1.35}
+  .market-status button{margin-left:auto;font-size:13px}
+  .metric-grid{gap:12px}
+  .metric{min-height:180px;padding:20px}
+  .metric-top{font-size:14px}.metric-top i{font-size:10px;padding:5px 8px}
+  .metric>strong{margin-top:22px;font-size:clamp(28px,9vw,40px)}
+  .metric>p{font-size:14px}.metric>p span{display:block;margin:5px 0 0}
+  .panel{padding:16px;border-radius:14px}
+  .panel-head{gap:12px;flex-wrap:wrap}.panel-head h2{font-size:18px}.panel-head p{font-size:13px;line-height:1.4}
+  .content-grid,.lower-grid,.status-grid,.indicator-hero-grid,.coin-detail-grid,.portfolio-page-grid,.settings-grid{grid-template-columns:minmax(0,1fr)!important}
+  .page-heading{display:flex!important;align-items:stretch!important;flex-direction:column;gap:16px;margin-bottom:20px}
+  .page-heading .login-submit.compact,.page-heading>button{width:100%;min-height:48px}
+  .market-tools{width:100%;display:grid!important;grid-template-columns:1fr auto;gap:8px}
+  .market-tools input{width:100%;min-width:0}
+  .market-category-tabs,.etf-tabs,.fuel-country-tabs,.bubble-period,.instrument-tabs{display:flex;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;padding:5px;gap:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .market-category-tabs::-webkit-scrollbar,.etf-tabs::-webkit-scrollbar,.fuel-country-tabs::-webkit-scrollbar,.instrument-tabs::-webkit-scrollbar{display:none}
+  .market-category-tabs button,.etf-tabs button,.fuel-country-tabs button,.instrument-tabs button{flex:0 0 auto;min-height:44px;scroll-snap-align:start;white-space:nowrap}
+  .global-coin-search form,.wallet-import-form,.binance-csv-actions{display:grid!important;grid-template-columns:1fr!important;gap:10px}
+  .global-coin-search input,.wallet-import-form input,.wallet-import-form select{width:100%;min-width:0;min-height:48px}
+  .coins-panel,.market-directory-panel,.etf-table-panel,.fuel-comparison{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .coins-table-head,.market-directory-row{min-width:840px}
+  .coin-row{min-width:840px}
+  .etf-table-head,.etf-row{min-width:720px}
+  .fuel-compare-head,.fuel-compare-row{min-width:680px}
+  .market-sparkline{min-width:145px}
+  .status-grid,.indicator-grid,.factor-grid,.portfolio-kpis,.etf-kpis,.etf-flow-cards,.fuel-best-grid,.fuel-price-grid{grid-template-columns:1fr!important;gap:12px}
+  .decentrader-grid{grid-template-columns:1fr!important}.decentrader-frame{height:430px}
+  .decentrader-heading{align-items:flex-start;flex-direction:column;gap:14px}
+  .indicator-hero-grid{gap:12px}.composite-card{min-height:auto}.composite-gauge{transform:scale(.88);transform-origin:center top}
+  .indicator-chart-card,.coin-chart-panel{min-width:0;overflow:hidden}
+  .tradingview-frame,.coin-detail-chart{height:480px!important;min-height:480px}
+  .factor-grid{display:grid!important}.methodology-row{grid-template-columns:14px minmax(0,1fr)!important}.methodology-score{grid-column:2;text-align:left!important}
+  .etf-heading-actions,.etf-controls{width:100%;flex-wrap:wrap}.etf-search{width:100%}
+  .etf-flow-chart{min-width:720px}.etf-flow-chart-panel{overflow-x:auto}
+  .etf-heatmap{min-width:620px}.etf-heatmap-panel{overflow-x:auto}
+  .portfolio-kpis{display:grid!important}.portfolio-kpis article strong{font-size:24px}
+  .portfolio-total-currencies{grid-template-columns:1fr 1fr!important}
+  .portfolio-donut-summary{display:grid!important;grid-template-columns:1fr!important}
+  .portfolio-donut-center{margin:auto}.portfolio-donut-legend{width:100%}
+  .portfolio-row{grid-template-columns:1fr!important;gap:12px;padding:18px 0}
+  .position-actions{justify-content:flex-start}.position-insights{grid-template-columns:1fr 1fr!important}
+  .watching-cards{grid-template-columns:1fr!important}.watching-card-main{min-width:0}.watch-catalog-row{grid-template-columns:minmax(0,1fr) auto!important}
+  .watch-catalog-row .market-sparkline{display:none}
+  .bubble-stage{height:calc(100dvh - 190px);min-height:540px}
+  .coin-detail-hero{grid-template-columns:1fr!important}.coin-chart-actions{align-items:stretch!important;flex-direction:column}.chart-source-switch{width:100%}
+  .asset-news-grid{grid-template-columns:1fr!important}
+  .fuel-price-tile{min-height:230px}.fuel-currencies{grid-template-columns:repeat(3,1fr)!important}
+  .login-view{padding:18px 14px;min-height:100dvh}.login-brand{font-size:15px}.login-card{padding:22px 18px}.login-card-head{margin-bottom:24px}.login-footer{font-size:10px}
+  .app-footer{padding:18px 14px;gap:8px;flex-direction:column}
+}
+
+@media(max-width:420px){
+  .top-actions .portfolio-privacy-button{display:none}
+  .app-brand{font-size:14px}.app-brand .brand-symbol{width:36px;height:36px}
+  .dashboard{padding-inline:10px}
+  .portfolio-total-currencies{grid-template-columns:1fr!important}
+  .position-insights{grid-template-columns:1fr!important}
+  .fuel-currencies{grid-template-columns:1fr!important}
+}
