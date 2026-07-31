@@ -1,0 +1,196 @@
+.market-directory-panel .coins-table-head,
+.market-directory-panel .coin-row {
+  grid-template-columns: 42px minmax(190px, 1.3fr) minmax(110px, .7fr) minmax(150px, .9fr) 80px minmax(115px, .8fr) minmax(120px, .8fr);
+  gap: 14px;
+}
+
+.market-directory-panel .coins-table-head > button {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.market-directory-panel .coins-table-head > button:hover,
+.market-directory-panel .coins-table-head > button.active {
+  color: var(--green);
+}
+
+.market-directory-panel .coins-table-head > button i {
+  width: 12px;
+  color: var(--green);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.market-directory-panel .coin-row {
+  min-height: 76px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  text-align: left;
+}
+
+.market-category-tabs {
+  display: flex;
+  gap: 8px;
+  margin: -8px 0 18px;
+  padding: 5px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.market-category-tabs button {
+  min-height: 42px;
+  padding: 0 18px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: 700 11px Manrope;
+  cursor: pointer;
+}
+
+.market-category-tabs button.active {
+  background: var(--green);
+  color: #07110d;
+  box-shadow: 0 7px 20px #25d6952b;
+}
+
+.market-sparkline {
+  height: 50px;
+  overflow: hidden;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--panel2) 82%, transparent);
+}
+
+.market-sparkline.native {
+  display: flex;
+  align-items: center;
+  background: transparent;
+}
+
+.market-sparkline.native svg {
+  width: 100%;
+  height: 48px;
+  overflow: visible;
+}
+
+.market-sparkline.native path {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.market-sparkline.native.negative path {
+  stroke: var(--red);
+}
+
+.market-sparkline.loading::after {
+  content: "7D";
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.market-sparkline.unavailable {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.market-directory-row {
+  cursor: default;
+}
+
+.market-directory-row .asset-logo {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.asset-logo,
+.watch-icon,
+.instrument-tab > span {
+  overflow: hidden;
+  flex: 0 0 auto;
+  isolation: isolate;
+}
+
+.asset-logo img,
+.coin-name .asset-logo img,
+.watch-icon img,
+.instrument-tab > span img {
+  display: block;
+  width: 68% !important;
+  height: 68% !important;
+  max-width: 68% !important;
+  max-height: 68% !important;
+  margin: auto;
+  object-fit: contain !important;
+  object-position: center;
+}
+
+.asset-logo .asset-logo-fallback,
+.watch-icon .asset-logo-fallback,
+.instrument-tab > span .asset-logo-fallback {
+  max-width: calc(100% - 5px);
+  overflow: hidden;
+  color: #17202a;
+  font: 800 9px/1 Manrope, sans-serif !important;
+  letter-spacing: -.04em;
+  text-align: center;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.detail-asset-logo img {
+  width: 64% !important;
+  height: 64% !important;
+  max-width: 64% !important;
+  max-height: 64% !important;
+}
+
+@media (max-width: 1000px) {
+  .market-directory-panel .coins-table-head,
+  .market-directory-panel .coin-row {
+    grid-template-columns: 34px minmax(150px, 1.2fr) 100px minmax(130px, .8fr) 70px;
+  }
+
+  .market-directory-panel .coins-table-head > *:nth-child(n+6),
+  .market-directory-panel .coin-row > *:nth-child(n+6) {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .market-directory-panel .coins-table-head,
+  .market-directory-panel .coin-row {
+    grid-template-columns: 28px minmax(130px, 1fr) 90px 110px;
+  }
+
+  .market-directory-panel .coins-table-head > *:nth-child(n+5),
+  .market-directory-panel .coin-row > *:nth-child(n+5) {
+    display: none;
+  }
+}

@@ -1,0 +1,51 @@
+.app {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(37, 214, 149, .075), transparent 28%),
+    radial-gradient(circle at 88% 42%, rgba(124, 92, 255, .055), transparent 30%),
+    linear-gradient(rgba(126, 135, 152, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 135, 152, .055) 1px, transparent 1px);
+  background-size: auto, auto, 64px 64px, 64px 64px;
+  background-attachment: fixed;
+}
+
+.app::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(9, 11, 16, .18) 65%, rgba(9, 11, 16, .38));
+}
+
+.app > .dashboard,
+.app > .ticker-tape,
+.app > .app-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.app > .topbar {
+  z-index: 20;
+}
+
+[data-theme="light"] .app {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(22, 168, 121, .09), transparent 28%),
+    radial-gradient(circle at 88% 42%, rgba(99, 73, 205, .055), transparent 30%),
+    linear-gradient(rgba(70, 82, 98, .075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 82, 98, .075) 1px, transparent 1px);
+}
+
+[data-theme="light"] .app::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 38%, rgba(206, 213, 220, .2));
+}
+
+@media (max-width: 760px) {
+  .app {
+    background-size: auto, auto, 42px 42px, 42px 42px;
+  }
+}

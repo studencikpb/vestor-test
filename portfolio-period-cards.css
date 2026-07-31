@@ -1,0 +1,116 @@
+.portfolio-performance {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.portfolio-performance-title {
+  grid-column: 1 / -1;
+  padding: 3px 2px;
+  font: 800 16px Manrope;
+}
+
+.portfolio-performance article {
+  position: relative;
+  min-height: 116px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--panel2), color-mix(in srgb, var(--panel2) 86%, var(--green)));
+}
+
+.portfolio-performance article::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: currentColor;
+  opacity: .85;
+}
+
+.portfolio-performance article > span {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .05em;
+}
+
+.portfolio-performance article > strong {
+  margin: 8px 0 3px;
+  font: 850 clamp(18px, 1.7vw, 25px) Manrope;
+  letter-spacing: -.025em;
+}
+
+.portfolio-performance article > strong > small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font: 700 10px Manrope;
+}
+
+.portfolio-performance article > small {
+  font: 800 15px Manrope;
+}
+
+.portfolio-performance article > em {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 8px;
+  font-style: normal;
+}
+
+.portfolio-private #portfolioPerformance em {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+.portfolio-private #portfolioPerformance em::after {
+  content: "••••••";
+  color: var(--text);
+  font: 800 14px Manrope;
+  letter-spacing: .13em;
+}
+
+/* Prevent nested USD/PLN values from escaping the privacy mask. */
+.portfolio-private #portfolioTotalCurrencies strong > *,
+.portfolio-private #portfolioPerformance strong > *,
+.portfolio-private #allocationBar .portfolio-donut-center strong > *,
+.portfolio-private #portfolioDonutLegend > div > strong > *,
+.portfolio-private #portfolioPageList .portfolio-row.large > div:nth-child(3) > *,
+.portfolio-private #portfolioPageList .position-insights b > *,
+.portfolio-private #portfolioList .portfolio-row > div:nth-child(3) > *,
+.portfolio-private #portfolioPage .portfolio-kpis strong > *,
+.portfolio-private #portfolioPage .portfolio-kpis small > * {
+  display: none !important;
+}
+
+.portfolio-private #portfolioPerformance article > small,
+.portfolio-private #portfolioPerformance article > em {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+.portfolio-private #portfolioPerformance article > small::after,
+.portfolio-private #portfolioPerformance article > em::after {
+  content: "••••••";
+  color: var(--text);
+  font: 800 14px Manrope;
+  letter-spacing: .13em;
+}
+
+.portfolio-private #portfolioPageList .portfolio-row.large > div:nth-child(3) strong,
+.portfolio-private #portfolioPageList .portfolio-row.large > div:nth-child(3) small,
+.portfolio-private #portfolioList .portfolio-row > div:nth-child(3) strong,
+.portfolio-private #portfolioList .portfolio-row > div:nth-child(3) small {
+  display: none !important;
+}
+
+@media (max-width: 650px) {
+  .portfolio-performance {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-performance article {
+    width: 100%;
+    min-height: 102px;
+  }
+}

@@ -1,0 +1,100 @@
+/* Readability pass: the original terminal scale was too small on wide displays. */
+body{font-size:17px}
+.topbar nav a,.mode-button,.logout,.profile b{font-size:14px}
+.profile i,.app-brand span,.ticker-tape{font-size:12px}
+.overline,.page-heading>div>p:last-child{font-size:13px;line-height:1.55}
+.page-heading h1{font-size:36px}
+.metric-top span{font-size:14px}.metric-top i,.live-pill{font-size:12px}
+.metric>strong{font-size:29px}.metric>p{font-size:14px}
+.panel-head h2{font-size:21px}.panel-head p{font-size:14px;line-height:1.5}
+.coins-table-head{font-size:13px}.coin-row{min-height:74px;font-size:14px}
+.coin-name b,.coin-row>strong,.coin-row>em{font-size:14px}
+.coin-name small{font-size:12px}.coin-name img{width:36px;height:36px}
+.portfolio-kpis span,.portfolio-kpis small,.portfolio-summary>span{font-size:14px}
+.portfolio-kpis strong{font-size:25px}.portfolio-summary>small{font-size:12px}
+.portfolio-row b,.portfolio-row strong{font-size:16px}.portfolio-row small{font-size:13px}
+.portfolio-row.large>div:nth-child(3)>strong{font-size:15px}
+.position-insights small{font-size:13px}.position-insights b{font-size:15px}
+.watch-row b,.watching-card b{font-size:16px}.watch-row span,.watching-card small{font-size:13px}
+.watch-row>strong,.watching-card strong{font-size:16px}
+.status-stat span,.signal-card span,.signal-card small{font-size:14px}
+.status-stat strong,.signal-card strong{font-size:20px}
+.factor-card span,.factor-card small,.indicator-disclaimer{font-size:13px}
+.factor-card strong{font-size:16px}
+.app-footer{font-size:13px}
+.position-dialog label,.dialog-head p{font-size:14px}
+.position-dialog input,.position-dialog select{font-size:16px}
+.profile-menu b,.user-row b,.owner-card span,.owner-card small{font-size:13px}
+.profile-menu small,.user-row small{font-size:12px}
+.watch-head,.watch-limit{font-size:12px}
+.watch-catalog-row b{font-size:14px}.watch-catalog-row small{font-size:12px}
+.watch-catalog-row>strong{font-size:13px}.watch-catalog-row>button{font-size:12px}
+.asset-news-card small,.asset-news-card p,.coin-stats span,.detail-identity span,.detail-price small{font-size:13px!important}
+.status-card small,.etf-card small,.indicator-card small,.connected-wallets small,.wallet-import-status,.security-note{font-size:12px!important}
+button,input,select,textarea{font-size:14px}
+.app small{font-size:12px!important;line-height:1.45}
+.watch-row>em,.mover-grid em,.positive,.negative{font-size:14px}
+.ticker-item,.ticker-item b,.ticker-item span{font-size:12px}
+.market-status b{font-size:13px}.market-status small,.market-status button{font-size:12px}
+.legend p,.mover-grid p b,.mover-grid strong,.news-item b{font-size:13px}
+.legend span,.mover-grid small,.news-item p,.news-item small{font-size:12px}
+.chart-controls button,.switch button,.show-all,.add-button,.dots{font-size:12px}
+.auth-tabs button,.login-options,.text-button,.login-error{font-size:13px!important}
+
+/* Shared spacing rhythm for every dashboard page. */
+.app .overline{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  margin:0 0 14px;
+  line-height:1.35;
+}
+.app .overline>span:first-child{
+  display:block!important;
+  width:40px!important;
+  min-width:40px!important;
+  height:2px!important;
+  margin:0!important;
+  background:var(--green)!important;
+}
+.app .overline>span:not(:first-child),.app .overline>#todayLabel{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  background:none!important;
+  white-space:nowrap;
+}
+.page-heading{
+  align-items:flex-start;
+  gap:32px;
+  margin-bottom:30px;
+}
+.page-heading>div{min-width:0}
+.page-heading h1{
+  margin:0 0 12px;
+  line-height:1.15;
+}
+.page-heading>div>p:last-child{
+  margin:0;
+  line-height:1.65;
+}
+.page-heading .watch-reorder-help{margin-top:10px!important}
+.welcome-row{gap:28px;margin-bottom:30px}
+.welcome-row h1{margin:0 0 10px;line-height:1.18}
+.welcome-row .overline{margin-bottom:12px}
+.page-view>.metric-grid+*,.page-view>.content-grid+*,.page-view>.lower-grid+*{margin-top:18px}
+.panel{padding:24px}
+.panel-head{gap:20px}
+.panel-head h2{line-height:1.25}
+.panel-head p{margin-top:7px}
+.portfolio-kpis,.status-grid,.status-signals,.indicator-hero-grid,.watching-cards{gap:18px}
+.coins-table-head,.coin-row{column-gap:16px}
+
+@media(max-width:760px){
+  .page-heading{gap:20px;margin-bottom:24px}
+  .app .overline>span:not(:first-child),.app .overline>#todayLabel{white-space:normal}
+  .panel{padding:19px}
+}
+@media(max-width:700px){.page-heading h1{font-size:30px}.coins-table-head{font-size:9px}.coin-row{font-size:11px}.coin-name b,.coin-row>strong,.coin-row>em{font-size:12px}.position-insights small{font-size:10px}}

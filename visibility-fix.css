@@ -1,0 +1,15 @@
+.login-view[hidden] {
+  display: none;
+}
+
+.allocation {
+  grid-column: 1 / -1;
+}
+
+.overline span[data-i18n] {
+  display: inline;
+  width: auto;
+  height: auto;
+  margin: 0;
+  background: none;
+}

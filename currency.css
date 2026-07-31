@@ -1,0 +1,51 @@
+.metric > strong small,
+#portfolioTotal small,
+#portfolioPageTotal small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.watch-row > strong,
+.coin-row > strong,
+.coin-row > span:nth-last-child(-n + 2),
+.watching-card > strong,
+.portfolio-row > div:nth-child(3) > strong {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.watch-row > strong small,
+.coin-row > strong small,
+.coin-row > span small,
+.watching-card > strong small,
+.portfolio-row strong small {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 500;
+}
+
+[data-theme="light"] .metric-top,
+[data-theme="light"] .metric-top > span {
+  color: #3f4a5a;
+  font-weight: 700;
+}
+
+[data-theme="light"] .metric-top i {
+  border: 1px solid #c2cad3;
+  background: #e1e6eb;
+  color: #4d5867;
+}
+
+[data-theme="light"] .metric > strong {
+  color: #111827;
+}
+
+[data-theme="light"] .metric > strong small,
+[data-theme="light"] #portfolioTotal small,
+[data-theme="light"] #portfolioPageTotal small {
+  color: #556171;
+}

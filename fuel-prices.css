@@ -1,0 +1,66 @@
+.fuel-market-panel{display:grid;gap:20px}
+.fuel-country-tabs{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 8px}
+.fuel-country-tabs button{display:flex;align-items:center;gap:8px;min-width:max-content;padding:12px 17px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--muted);font:700 14px Manrope;cursor:pointer}
+.fuel-country-tabs button.active{border-color:#25d69580;background:#25d6951a;color:var(--text)}
+.fuel-country-tabs i{font-style:normal;font-size:20px}
+.fuel-best-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fuel-best-card{position:relative;overflow:hidden;padding:20px 22px;background:linear-gradient(135deg,#16342a,#111920)}
+.fuel-best-card:after{content:"";position:absolute;right:-35px;bottom:-55px;width:145px;height:145px;border-radius:50%;background:#25d69518}
+.fuel-best-card>span{color:var(--green);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.fuel-best-card>div{display:flex;align-items:center;gap:10px;margin:10px 0}
+.fuel-best-card>div i{font-style:normal;font-size:27px}
+.fuel-best-card>div b{font:800 19px Manrope}
+.fuel-best-card>strong{display:block;font:800 24px Manrope}
+.fuel-country-card{padding:24px}
+.fuel-country-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}
+.fuel-country-heading h2{margin:0 0 5px;font:800 25px Manrope}
+.fuel-country-heading p{margin:0;color:var(--muted);font-size:13px}
+.fuel-country-heading>strong{font:700 12px Manrope;color:#e8bc63;padding:7px 10px;border:1px solid #e8bc6340;border-radius:999px;background:#e8bc6310}
+.fuel-country-heading>strong.station-live{color:var(--green);border-color:#25d69540;background:#25d69510}
+.fuel-price-grid{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));overflow:hidden;border-radius:16px}
+.fuel-price-tile{min-height:260px;padding:24px 20px;display:flex;flex-direction:column;background:linear-gradient(145deg,#244f31,#183624);color:#fff}
+.fuel-price-tile:nth-child(2){background:linear-gradient(145deg,#356c30,#244a25)}
+.fuel-price-tile:nth-child(3),.fuel-price-tile:nth-child(4){background:linear-gradient(145deg,#323740,#20242b)}
+.fuel-price-tile:nth-child(5){background:linear-gradient(145deg,#319dd8,#2477b9)}
+.fuel-price-tile>span{font-size:18px;opacity:.84}
+.fuel-price-tile>strong{display:block;margin:12px 0 8px;font:800 27px Manrope}
+.fuel-currencies{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:3px}
+.fuel-currencies span{display:flex;flex-direction:column;gap:2px;padding:7px;border-radius:7px;background:#ffffff12;font-size:11px;white-space:nowrap}
+.fuel-currencies span b{font-size:9px;opacity:.68}
+.fuel-currencies.compact{gap:4px}
+.fuel-currencies.compact span{padding:5px;background:#7b87910c;color:var(--muted)}
+.fuel-currencies.compact span b{color:var(--text)}
+.fuel-periods{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:auto;padding-top:15px}
+.fuel-periods small{display:flex;flex-direction:column;gap:3px;padding:7px;border:1px solid #ffffff20;border-radius:7px;color:#fff;font-size:10px}
+.fuel-periods small b{font-size:9px;opacity:.65}
+.fuel-periods small em{font-style:normal;opacity:.72}
+.fuel-price-tile .up{color:#ffadad}.fuel-price-tile .down{color:#8ff0c5}
+.fuel-meta{display:flex;justify-content:space-between;gap:18px;margin-top:15px;color:var(--muted);font-size:12px}
+.fuel-meta a{color:var(--green)}
+.fuel-comparison{padding:24px;overflow-x:auto}
+.fuel-comparison-table{display:grid;min-width:1540px}
+.fuel-compare-head,.fuel-compare-row{display:grid;grid-template-columns:minmax(190px,1.15fr) repeat(5,minmax(205px,1fr));align-items:stretch;gap:10px;padding:10px;border-bottom:1px solid var(--line)}
+.fuel-compare-head{color:var(--muted);font-size:11px;font-weight:800;align-items:center}
+.fuel-type-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 13px;border-radius:10px;color:#fff;font-size:15px}
+.fuel-type-head small{font-size:9px;opacity:.75}
+.fuel-type-head.petrol95,.fuel-table-price.petrol95{background:linear-gradient(145deg,#244f31,#183624)}
+.fuel-type-head.petrol98,.fuel-table-price.petrol98{background:linear-gradient(145deg,#356c30,#244a25)}
+.fuel-type-head.diesel,.fuel-table-price.diesel{background:linear-gradient(145deg,#323740,#20242b)}
+.fuel-type-head.diesel-premium,.fuel-table-price.diesel-premium{background:linear-gradient(145deg,#424750,#2a2e35)}
+.fuel-type-head.lpg,.fuel-table-price.lpg{background:linear-gradient(145deg,#319dd8,#2477b9)}
+.fuel-compare-row{width:100%;border-width:0 0 1px;border-style:solid;border-color:var(--line);background:transparent;color:var(--text);text-align:left;cursor:pointer}
+.fuel-compare-row:nth-child(even){background:#7b879108}
+.fuel-compare-row:hover{background:#25d69510}
+.fuel-compare-row>b{display:flex;align-items:center;gap:11px;font:800 15px Manrope}
+.fuel-compare-row>b>i{font-style:normal;font-size:23px}
+.fuel-compare-row>b>span{display:flex;flex-direction:column}
+.fuel-compare-row>b small{color:var(--muted);font-size:10px}
+.fuel-table-price{padding:10px 11px;border-radius:10px;color:#fff}
+.fuel-compare-row>div>strong{display:block;margin-bottom:5px;font:800 14px Manrope;color:#fff}
+.fuel-table-price .fuel-currencies.compact span{background:#ffffff12;color:#fff}
+.fuel-table-price .fuel-currencies.compact span b{color:#fff;opacity:.7}
+[data-theme="light"] .fuel-country-tabs button{background:#fff}
+[data-theme="light"] .fuel-country-tabs button.active{background:#dff7ed}
+[data-theme="light"] .fuel-best-card{background:linear-gradient(135deg,#e9f8f2,#f8fafb)}
+@media(max-width:1100px){.fuel-price-grid{grid-template-columns:repeat(3,1fr)}.fuel-best-grid{grid-template-columns:1fr}.fuel-price-tile{min-height:230px}}
+@media(max-width:700px){.fuel-price-grid{grid-template-columns:1fr}.fuel-price-tile{min-height:215px}.fuel-country-heading,.fuel-meta{flex-direction:column}.fuel-country-card,.fuel-comparison{padding:17px}}
