@@ -1,3 +1,10 @@
+.fuel-market-panel[hidden],
+.market-directory-panel[hidden],
+.global-coin-search[hidden],
+[hidden] {
+  display: none !important;
+}
+
 .login-view[hidden] {
   display: none;
 }
