@@ -267,7 +267,7 @@ $('#cryptoEtfPage .etf-kpis').insertAdjacentHTML('afterend',`<section class="pan
 let etfFlowHistory=[],etfHeatmapMetric='volume',etfFlowRange=localStorage.getItem('vestorEtfFlowRange')||'1Y';
 const BUILTIN_BTC_ETF_FLOWS={source:'SatsIntel · Farside Investors',updated:'2026-07-24',cumulative_usd:49150000000,rows:[['2026-07-06',223400000],['2026-07-07',21500000],['2026-07-08',-137700000],['2026-07-09',-95300000],['2026-07-10',90400000],['2026-07-13',-478100000],['2026-07-14',174500000],['2026-07-15',97700000],['2026-07-16',79100000],['2026-07-17',132300000],['2026-07-20',185400000],['2026-07-21',196700000],['2026-07-22',31200000],['2026-07-23',-225100000],['2026-07-24',0]].map(([date,flow_usd])=>({date,flow_usd}))};
 $$('[data-heatmap-metric]').forEach(button=>button.addEventListener('click',()=>{etfHeatmapMetric=button.dataset.heatmapMetric;$$('[data-heatmap-metric]').forEach(x=>x.classList.toggle('active',x===button));renderEtfHeatmap()}));
-function showPage(name){if(name!=='bubbles')stopBubblePhysics();$$('.page-view').forEach(v=>{v.hidden=v.dataset.view!==name;v.classList.toggle('active',v.dataset.view===name)});$$('.topbar nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));$('#profileMenu').classList.remove('open');if((name==='markets'||name==='bubbles')&&!state.coins.length)loadCoins();if(name==='bubbles')renderBubbles();if(name==='market-status')loadCryptoEtfs().then(loadMarketStatus);if(name==='vestor-indicator')loadCryptoEtfs().then(loadVestorIndicator);if(name==='crypto-etfs')loadCryptoEtfs();if(name==='portfolio')autoSyncPublicWallets();if(name==='settings')renderSettings();window.scrollTo({top:0,behavior:'smooth'})}
+function showPage(name){if(name!=='bubbles')stopBubblePhysics();$$('.page-view').forEach(v=>{v.hidden=v.dataset.view!==name;v.classList.toggle('active',v.dataset.view===name)});$$('.topbar nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));$('#profileMenu').classList.remove('open');if((name==='markets'||name==='bubbles')&&!state.coins.length){loadBundledCoins();loadCoins()}if(name==='bubbles')renderBubbles();if(name==='market-status'){loadBundledCoins().then(loadMarketStatus);loadCryptoEtfs()}if(name==='vestor-indicator'){loadVestorIndicator();loadCryptoEtfs()}if(name==='crypto-etfs')loadCryptoEtfs();if(name==='portfolio')autoSyncPublicWallets();if(name==='settings')renderSettings();window.scrollTo({top:0,behavior:'smooth'})}
 $$('[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showPage(a.dataset.page)}));
 $('[data-page="vestor-indicator"]').addEventListener('click',loadIndicatorBtcChart);
 $('[data-page="vestor-indicator"]').addEventListener('click',loadIndicatorHistory);
@@ -389,7 +389,33 @@ function externalLabel(value,fallback=''){return String(value||fallback).replace
 function sanitizeCoin(coin){if(!coin||!/^[a-z0-9._-]{1,120}$/i.test(String(coin.id||'')))return null;return {...coin,id:String(coin.id),name:externalLabel(coin.name,coin.id),symbol:externalLabel(coin.symbol,'?').slice(0,20),image:safeLink(coin.image),thumb:safeLink(coin.thumb),large:safeLink(coin.large)}}
 function mergeCoins(core,extras=getExtraCoins()){const merged=new Map;[...core,...extras].forEach(raw=>{const coin=sanitizeCoin(raw);if(coin)merged.set(coin.id,coin)});return [...merged.values()].sort((a,b)=>(a.market_cap_rank||Number.MAX_SAFE_INTEGER)-(b.market_cap_rank||Number.MAX_SAFE_INTEGER))}
 function refreshCoinViews(){updateAssetSelect();renderCoins();renderBubbles();renderTabs();renderWatchlist();renderWatchingCards();renderWatchEditor();renderPortfolio()}
-async function loadCoins(){const cacheKey='vestorCoinCache500SparkV2',cached=JSON.parse(localStorage.getItem(cacheKey)||'null');if(!state.coins.length&&cached?.data?.length){state.coins=mergeCoins(cached.data);const cachedBtc=state.coins.find(coin=>coin.id==='bitcoin');if(cachedBtc)applyBitcoinQuote(cachedBtc.current_price,cachedBtc.price_change_percentage_24h);refreshCoinViews()}else if(!state.coins.length)$('#coinsTable').innerHTML=`<div class="table-loading">${t('loadingCoins')}</div>`;try{const base='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&sparkline=true&price_change_percentage=1h,24h,7d,30d,1y',pages=await Promise.all([json(`${base}&page=1`),json(`${base}&page=2`)]),core=pages.flat().slice(0,500);state.coins=mergeCoins(core);const liveBtc=state.coins.find(coin=>coin.id==='bitcoin');if(liveBtc)applyBitcoinQuote(liveBtc.current_price,liveBtc.price_change_percentage_24h);localStorage.setItem(cacheKey,JSON.stringify({at:Date.now(),data:core}));refreshCoinViews()}catch{if(!state.coins.length)$('#coinsTable').innerHTML='<div class="table-loading">CoinGecko API — chwilowy brak danych / temporarily unavailable</div>';else refreshCoinViews()}}
+let bundledCoinsPromise=null,coinsLoadPromise=null;
+function normalizeCoinLore(rows){return (rows||[]).map(row=>({id:row.nameid||`coinlore-${row.id}`,symbol:String(row.symbol||'').toLowerCase(),name:row.name,market_cap_rank:Number(row.rank),current_price:Number(row.price_usd),market_cap:Number(row.market_cap_usd),total_volume:Number(row.volume24),price_change_percentage_24h:Number(row.percent_change_24h),price_change_percentage_1h_in_currency:Number(row.percent_change_1h),price_change_percentage_7d_in_currency:Number(row.percent_change_7d),circulating_supply:Number(row.csupply),total_supply:Number(row.tsupply),max_supply:Number(row.msupply)||null,image:`https://assets.coincap.io/assets/icons/${String(row.symbol||'').toLowerCase()}@2x.png`,data_source:'CoinLore'}))}
+async function fastJson(url,timeout=6500){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);try{const response=await fetch(url,{signal:controller.signal,cache:'no-store'});if(!response.ok)throw Error(`${response.status} ${url}`);return await response.json()}finally{clearTimeout(timer)}}
+async function loadBundledCoins(){
+  if(state.coins.length)return true;
+  if(!bundledCoinsPromise)bundledCoinsPromise=fastJson('assets/market-snapshot.json?v=20260731-1',4000).then(payload=>{if(!payload?.data?.length)throw Error('Empty market snapshot');state.coins=mergeCoins(payload.data);const btc=state.coins.find(coin=>coin.id==='bitcoin');if(btc)applyBitcoinQuote(btc.current_price,btc.price_change_percentage_24h);refreshCoinViews();return true}).catch(error=>{console.warn('Bundled market snapshot unavailable',error);return false});
+  return bundledCoinsPromise;
+}
+async function liveCoinRows(){
+  const base='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&sparkline=false&price_change_percentage=1h,24h,7d,30d,1y';
+  try{const first=await fastJson(`${base}&page=1`),second=await fastJson(`${base}&page=2`);if(first.length+second.length<100)throw Error('Incomplete CoinGecko response');return first.concat(second).slice(0,500)}catch(coingeckoError){
+    console.warn('CoinGecko unavailable; using CoinLore live fallback.',coingeckoError);
+    const batches=await Promise.all([0,100,200,300,400].map(start=>fastJson(`https://api.coinlore.net/api/tickers/?start=${start}&limit=100`,6500)));
+    return normalizeCoinLore(batches.flatMap(batch=>batch.data||[])).slice(0,500)
+  }
+}
+async function loadCoins(){
+  if(coinsLoadPromise)return coinsLoadPromise;
+  const cacheKey='vestorCoinCache500SparkV3';
+  coinsLoadPromise=(async()=>{let cached=null;try{cached=JSON.parse(localStorage.getItem(cacheKey)||'null')}catch{}
+    if(!state.coins.length&&cached?.data?.length){state.coins=mergeCoins(cached.data);const btc=state.coins.find(coin=>coin.id==='bitcoin');if(btc)applyBitcoinQuote(btc.current_price,btc.price_change_percentage_24h);refreshCoinViews()}
+    if(!state.coins.length)await loadBundledCoins();
+    if(!state.coins.length)$('#coinsTable').innerHTML=`<div class="table-loading">${t('loadingCoins')}</div>`;
+    try{const live=await liveCoinRows(),previous=new Map(state.coins.map(coin=>[coin.id,coin])),core=live.map(coin=>({...coin,sparkline_in_7d:coin.sparkline_in_7d||previous.get(coin.id)?.sparkline_in_7d}));state.coins=mergeCoins(core);const btc=state.coins.find(coin=>coin.id==='bitcoin');if(btc)applyBitcoinQuote(btc.current_price,btc.price_change_percentage_24h);localStorage.setItem(cacheKey,JSON.stringify({at:Date.now(),data:core}));refreshCoinViews()}catch(error){console.warn('Live crypto market sources unavailable; keeping cached snapshot.',error);if(!state.coins.length)$('#coinsTable').innerHTML='<div class="table-loading">Dane rynkowe są chwilowo niedostępne / Market data temporarily unavailable</div>';else refreshCoinViews()}
+  })().finally(()=>{coinsLoadPromise=null});
+  return coinsLoadPromise
+}
 async function loadExchangeSymbols(){try{const rows=await json('https://api.binance.com/api/v3/ticker/price');state.binanceSymbols=new Set(rows.map(r=>r.symbol))}catch{state.binanceSymbols=new Set()}}
 function compact(n){return new Intl.NumberFormat(state.lang==='pl'?'pl-PL':'en-GB',{notation:'compact',maximumFractionDigits:2}).format(n)}
 let marketCategory='crypto',marketSparkObserver=null,marketSort={key:'rank',direction:'asc'};
@@ -408,20 +434,22 @@ function marketSparkline(tv,id){
   const coin=state.coins.find(row=>coinTradingSymbol(row)===tv),coinPoints=coin?.sparkline_in_7d?.price||[];
   if(coinPoints.length>2)return sparklineMarkup(coinPoints);
   const points=state.marketSparkPoints[id]||marketSparkCache.get(id);if(points?.length)return sparklineMarkup(points);
-  return `<div class="market-sparkline ${id==='spacex'?'unavailable':'loading'}" title="${id==='spacex'?(state.lang==='pl'?'Spółka prywatna — brak notowań':'Private company — no quote'):(state.lang==='pl'?'Pobieranie trendu 7D':'Loading 7D trend')}">${id==='spacex'?'—':''}</div>`
+  return `<div class="market-sparkline ${id==='spacex'?'unavailable':'loading'}" data-market-spark-id="${safeText(id)}" data-market-spark-symbol="${safeText(tv)}" title="${id==='spacex'?(state.lang==='pl'?'Spółka prywatna — brak notowań':'Private company — no quote'):(state.lang==='pl'?'Pobieranie trendu 7D':'Loading 7D trend')}">${id==='spacex'?'—':''}</div>`
 }
 async function loadNativeMarketSparkline(target){
   if(target.dataset.loaded)return;target.dataset.loaded='1';
   const id=target.dataset.marketSparkId,symbol=target.dataset.marketSparkSymbol;
   try{
-    const payload=await json(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=7d&interval=1h&includePrePost=false`),result=payload.chart?.result?.[0],points=(result?.indicators?.quote?.[0]?.close||[]).map(Number).filter(Number.isFinite);
+    let points=[];
+    if(symbol.startsWith('BINANCE:')){const pair=symbol.slice(8);points=(await fastJson(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(pair)}&interval=4h&limit=42`,5000)).map(row=>Number(row[4])).filter(Number.isFinite)}
+    else{const yahoo=yahooMarketSymbol(id,findAsset(id));if(!yahoo)throw Error('No history symbol');const payload=await fastJson(`https://query1.finance.yahoo.com/v8/finance/chart/${yahoo}?range=7d&interval=1h&includePrePost=false`,5000),result=payload.chart?.result?.[0];points=(result?.indicators?.quote?.[0]?.close||[]).map(Number).filter(Number.isFinite)}
     if(points.length<3)throw Error('No history');
     marketSparkCache.set(id,points);const markup=sparklineMarkup(points),holder=document.createElement('div');holder.innerHTML=markup;target.replaceWith(holder.firstElementChild);
   }catch{
     target.classList.remove('loading');target.classList.add('unavailable');target.textContent='—';target.title=state.lang==='pl'?'Historia 7D chwilowo niedostępna':'7D history temporarily unavailable';
   }
 }
-function observeMarketSparklines(){marketSparkObserver?.disconnect()}
+function observeMarketSparklines(){marketSparkObserver?.disconnect();const targets=$$('.market-sparkline.loading[data-market-spark-id]');if(!targets.length)return;if(!('IntersectionObserver'in window)){targets.slice(0,12).forEach(loadNativeMarketSparkline);return}marketSparkObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){marketSparkObserver.unobserve(entry.target);loadNativeMarketSparkline(entry.target)}}),{rootMargin:'180px 0px'});targets.forEach(target=>marketSparkObserver.observe(target))}
 function marketSevenDay(id,asset){const coin=asset?.coin||state.coins.find(row=>row.id===id),direct=Number(coin?.price_change_percentage_7d_in_currency);if(Number.isFinite(direct))return direct;const points=state.marketSparkPoints[id]||marketSparkCache.get(id);if(points?.length>1){const first=Number(points[0]),last=Number(points.at(-1));if(first&&Number.isFinite(last))return (last/first-1)*100}return null}
 function marketSortValue(row,key,crypto){if(crypto){return {rank:Number(row.market_cap_rank)||Number.MAX_SAFE_INTEGER,asset:row.name.toLowerCase(),price:Number(row.current_price)||0,'7d':Number(row.price_change_percentage_7d_in_currency)||0,'24h':Number(row.price_change_percentage_24h)||0,marketCap:Number(row.market_cap)||0,volume:Number(row.total_volume)||0}[key]}const [id,a,index]=row;return {rank:index,asset:a[state.lang].toLowerCase(),price:assetUsd(id)||0,'7d':marketSevenDay(id,a)??-Infinity,'24h':Number.isFinite(Number(state.changes[id]))?Number(state.changes[id]):-Infinity,marketCap:a.type.toLowerCase(),volume:a.symbol.toLowerCase()}[key]}
 function sortMarketRows(rows,crypto){const factor=marketSort.direction==='asc'?1:-1,key=marketSort.key;return rows.map((row,index)=>crypto?row:[row[0],row[1],index+1]).sort((a,b)=>{const av=marketSortValue(a,key,crypto),bv=marketSortValue(b,key,crypto);if(typeof av==='string'||typeof bv==='string')return String(av).localeCompare(String(bv),state.lang)*factor;return ((Number(av)||0)-(Number(bv)||0))*factor})}
@@ -620,7 +648,8 @@ function renderAccumulationFactors(factors){
 async function loadVestorIndicator(){
   const button=$('#vestorIndicatorRefresh');button?.classList.add('spin');
   try{
-    if(!state.coins.length)await loadCoins();
+    if(!state.coins.length)await loadBundledCoins();
+    loadCoins();
     const requests=[
       json('https://api.alternative.me/fng/?limit=1'),
       json('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=600'),
